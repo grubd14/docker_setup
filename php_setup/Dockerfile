@@ -2,4 +2,4 @@ FROM php:8.5-apache
 
 RUN a2enmod rewrite
 
-# RUN docker-php-ext-install pdo pdo_mysql mysqli
+RUN docker-php-ext-install pdo pdo_mysql mysqli
