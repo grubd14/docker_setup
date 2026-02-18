@@ -37,4 +37,6 @@ services:
       - db
       - phpmyadmin
     ports:
-      - "8080"
+      - "5000:80"
+    expose:
+      - "5000"

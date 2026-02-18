@@ -1,0 +1,50 @@
+<!doctype html>
+<html>
+    <head>
+        <title>Simple Form</title>
+    </head>
+    <body>
+        <form action="form.php" method="GET">
+            <label for="fname">First Name</label><br />
+            <input type="text" id="fname" name="fname" /><br />
+
+            <label for="lname">Last Name</label><br />
+            <input type="text" id="lname" name="lname" /><br />
+
+            <label for="email">Email</label><br />
+            <input type="email" id="email" name="email" /><br />
+
+            <label for="address">Address</label><br />
+            <input type="text" id="address" name="address" /><br />
+
+            <label>Gender:</label><br />
+            <input type="radio" id="male" name="gender" value="Male" />
+            <label for="male">Male</label><br />
+
+            <input type="radio" id="female" name="gender" value="Female" />
+            <label for="female">Female</label><br />
+
+            <input type="radio" id="other" name="gender" value="Other" />
+            <label for="other">Other</label><br /><br />
+
+            <label for="faculty">Faculty:</label><br />
+            <select id="faculty" name="faculty">
+                <option value="">-- Select Faculty --</option>
+                <option value="Science">Science</option>
+                <option value="Management">Management</option>
+                <option value="Humanities">Humanities</option></select
+            ><br /><br />
+
+            <label>Hobbies:</label><br />
+            <input type="radio" name="hobby" value="Swimming" /> Swimming<br />
+            <input type="radio" name="hobby" value="Running" /> Running<br />
+            <input type="radio" name="hobby" value="Basketball" />
+            Basketball<br />
+            <input type="radio" name="hobby" value="Cooking" /> Cooking<br />
+            <input type="radio" name="hobby" value="Coding" />
+            Coding<br /><br />
+
+            <input type="submit" value="Submit" /><br />
+        </form>
+    </body>
+</html>
