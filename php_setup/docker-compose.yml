@@ -12,6 +12,7 @@ services:
       - "3306:3306"
     volumes:
       - "./db_data:/var/lib/mysql"
+#use username: root and password:root 
 
   phpmyadmin:
     image: phpmyadmin
