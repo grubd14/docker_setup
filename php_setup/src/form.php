@@ -1,30 +1,41 @@
 <?php
-// Database connection info
-$servername = "db";
-$username = "app_user";
-$password = "app_pass";
-$dbname = "app_db";
+// Very simple beginner-friendly form handler
+// Receives POST from index.html and inserts firstname, lastname, email into Users table
 
-// Connect to database
-$conn = mysqli_connect($servername, $username, $password, $dbname);
+// Database settings - change these if your environment is different
+$host = 'db';
+$user = 'app_user';
+$pass = 'app_pass';
+$db   = 'app_db';
 
-// Check connection
+// Connect to MySQL
+$conn = mysqli_connect($host, $user, $pass, $db);
 if (!$conn) {
-    die("Connection failed: " . mysqli_connect_error());
+    // Simple error message for beginners
+    die('Database connection failed: ' . mysqli_connect_error());
 }
 
-// Get form data
-$first_name = $_POST["fname"];
-$last_name = $_POST["lname"];
-$email = $_POST["email"];
+// Only handle POST requests
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    // Get values and trim whitespace
+    $first = isset($_POST['fname']) ? trim($_POST['fname']) : '';
+    $last  = isset($_POST['lname']) ? trim($_POST['lname']) : '';
+    $email = isset($_POST['email']) ? trim($_POST['email']) : '';
 
-// Insert data
-$sql = "INSERT INTO Users (firstname, lastname, email) VALUES ('$first_name', '$last_name', '$email')";
-if (mysqli_query($conn, $sql)) {
-    echo "User added: $first_name $last_name ($email)";
-} else {
-    echo "Error: " . mysqli_error($conn);
-}
+    // Basic validation
+    if ($first === '' || $last === '' || $email === '') {
+        $message = 'Please fill in First name, Last name, and Email.';
+    } elseif (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+        $message = 'Please enter a valid email address.';
+    } else {
+        // Escape values (simple protection)
+        $first_e = mysqli_real_escape_string($conn, $first);
+        $last_e  = mysqli_real_escape_string($conn, $last);
+        $email_e = mysqli_real_escape_string($conn, $email);
 
-mysqli_close($conn);
-?>
+        // Simple INSERT query
+        $sql = "INSERT INTO Users (firstname, lastname, email) VALUES ('$first_e', '$last_e', '$email_e')";
+        if (mysqli_query($conn, $sql)) {
+            $message = 'User added: ' . htmlspecialchars($first) . ' ' . htmlspecialchars($last);
+        } else {
+            $message = 'Insert error: '

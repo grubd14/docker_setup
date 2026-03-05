@@ -1,50 +1,46 @@
 <?php
+// createDatabase.php
+// Very simple script for beginners to create a Users table.
+// Usage:
+//  - Place this file in your web server directory (same as other project files).
+//  - Open it once in your browser (e.g. http://localhost/php_setup/src/createDatabase.php)
+//  - Or run from command line: php createDatabase.php
+//
+// This script connects to the database and creates a Users table
+// with three columns: firstname, lastname, email.
+// Adjust the database connection settings below if needed.
 
+// Database connection settings (change if your setup is different)
 $servername = "db";
 $username = "app_user";
 $password = "app_pass";
-$dbname = "app_db"; //
-// to create other databases use the root user
+$dbname = "app_db";
 
+// Connect to MySQL
 $conn = mysqli_connect($servername, $username, $password, $dbname);
 
-// check connection
+// Check connection
 if (!$conn) {
-    die("Connection failed: " . mysqli_connect_error());
+    die("Connection failed: " . mysqli_connect_error() . PHP_EOL);
 }
 
-// create table
-$createTableSql = "CREATE TABLE IF NOT EXISTS Users (
-    id INT(6) AUTO_INCREMENT PRIMARY KEY,
-    firstname VARCHAR(30) NOT NULL,
-    lastname VARCHAR(30) NOT NULL,
-    email VARCHAR(30)
-)";
+// SQL to create the Users table
+$sql = "
+CREATE TABLE IF NOT EXISTS Users (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    firstname VARCHAR(100) NOT NULL,
+    lastname VARCHAR(100) NOT NULL,
+    email VARCHAR(100) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+";
 
-if (mysqli_query($conn, $createTableSql)) {
-    echo "Table created successfully.<br>";
+// Run the query
+if (mysqli_query($conn, $sql)) {
+    echo "Table 'Users' is ready." . PHP_EOL;
 } else {
-    echo "Error creating table: " . mysqli_error($conn) . "<br>";
+    echo "Error creating table: " . mysqli_error($conn) . PHP_EOL;
 }
 
-// insert data
-$insertSql = "INSERT INTO Users (firstname, lastname, email) VALUES
-('Ram', 'Rai', 'ram.rai@mail.com'),
-('Sita', 'Sharma', 'sita.sharma@mail.com'),
-('Hari', 'Bahadur', 'hari.bahadur@mail.com'),
-('Gita', 'Karki', 'gita.karki@mail.com'),
-('Anil', 'Thapa', 'anil.thapa@mail.com'),
-('Sunita', 'Gurung', 'sunita.gurung@mail.com'),
-('Bikash', 'Lama', 'bikash.lama@mail.com'),
-('Manish', 'Shrestha', 'manish.shrestha@mail.com'),
-('Rina', 'Maharjan', 'rina.maharjan@mail.com'),
-('Prakash', 'Bista', 'prakash.bista@mail.com')";
-
-if (mysqli_query($conn, $insertSql)) {
-    echo "Data inserted successfully.<br>";
-} else {
-    echo "Error inserting data: " . mysqli_error($conn) . "<br>";
-}
-
+// Close the connection
 mysqli_close($conn);
 ?>

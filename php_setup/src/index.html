@@ -1,50 +1,51 @@
-<!doctype html>
-<html>
-    <head>
-        <title>Simple Form</title>
-    </head>
-    <body>
-        <form action="form.php" method="POST">
-            <label for="fname">First Name</label><br />
-            <input type="text" id="fname" name="fname" /><br />
+<!DOCTYPE html>
+<html lang="en">
+<head></head>
+  <meta charset="utf-8" />
+  <title>Add User - Simple Form</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <style>
+    /* Small</style>, simple styling to keep the page readable for beginners */
+    body { font-family: Arial, sans-serif; max-width: 700px; margin: 30px auto; padding: 0 12px; }
+    h1 { margin-bottom: 8px; }
+    form { margin-top: 12px; }
+    label { display:block; margin-top: 10px; }
+    input[type="text"], input[type="email"] { width: 100%; padding: 8px; box-sizing: border-box; }
+    input[type="submit"] { margin-top: 12px; padding: 8px 12px; }
+    p.links { margin-top: 18px; }
+    code { background:#f4f4f4; padding:2px 4px; border-radius:3px; }
+  </style>
+</head>
+<body>
+  <h1>Add User</body></h1>
 
-            <label for="lname">Last Name</label><br />
-            <input type="text" id="lname" name="lname" /><br />
+  <!-- Very simple form for beginners.
+       It sends the data to form.php using POST. -->
+  <form action="form.php" method="post">
+    <label for="fname">First name (required)</label>
+    <input type="text" id="fname" name="fname" required placeholder="John">
 
-            <label for="email">Email</label><br />
-            <input type="email" id="email" name="email" /><br />
+    <label for="lname">Last name (required)</label>
+    <input type="text" id="lname" name="lname" required placeholder="Doe">
 
-            <label for="address">Address</label><br />
-            <input type="text" id="address" name="address" /><br />
+    <label for="email">Email (required)</label>
+    <input type="email" id="email" name="email" required placeholder="john@example.com">
 
-            <label>Gender:</label><br />
-            <input type="radio" id="male" name="gender" value="Male" />
-            <label for="male">Male</label><br />
+    <input type="submit" value="Add User">
+  </form>
 
-            <input type="radio" id="female" name="gender" value="Female" />
-            <label for="female">Female</label><br />
+  <p class="links">
+    <a href="list.php">View all users</a> |
+    <a href="createDatabase.php">Create table (run once)</a>
+  </p>
 
-            <input type="radio" id="other" name="gender" value="Other" />
-            <label for="other">Other</label><br /><br />
-
-            <label for="faculty">Faculty:</label><br />
-            <select id="faculty" name="faculty">
-                <option value="">-- Select Faculty --</option>
-                <option value="Science">Science</option>
-                <option value="Management">Management</option>
-                <option value="Humanities">Humanities</option></select
-            ><br /><br />
-
-            <label>Hobbies:</label><br />
-            <input type="radio" name="hobby" value="Swimming" /> Swimming<br />
-            <input type="radio" name="hobby" value="Running" /> Running<br />
-            <input type="radio" name="hobby" value="Basketball" />
-            Basketball<br />
-            <input type="radio" name="hobby" value="Cooking" /> Cooking<br />
-            <input type="radio" name="hobby" value="Coding" />
-            Coding<br /><br />
-
-            <input type="submit" value="Submit" /><br />
-        </form>
-    </body>
+  <p></p>
+    Notes for beginners:
+    <ul>
+      <li>Click <em>Create table</em</ul></li>> once to create the database table before adding users.</li>
+      <li>The form submits to <code>form.php</</code>code>, which performs the insert into the database.</li>
+      <li>If you are using a local server, open this page in your browser via your web server (for example <code>http://localhost/path/to/index.html</code></code>).</li>
+    </ul>
+  </p>
+</body>
 </html>

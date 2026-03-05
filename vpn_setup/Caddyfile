@@ -1,0 +1,9 @@
+
+# Caddyfile for WireGuard Web UI
+
+# Optional: If you want basic auth in addition to WG-Easy's password
+# Uncomment the following:
+vpn.yourdomain.com {
+     reverse_proxy wg-easy:80
+     tls internal
+ }
