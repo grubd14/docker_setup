@@ -3,7 +3,6 @@
 
 # Optional: If you want basic auth in addition to WG-Easy's password
 # Uncomment the following:
-vpn.yourdomain.com {
-     reverse_proxy wg-easy:80
-     tls internal
+vpn.sushilneupane.com.np {
+     reverse_proxy wg-easy:51821
  }
