@@ -25,8 +25,9 @@ services:
     container_name: wg-easy
     networks:
       wg:
-        ipv4_address: 10.42.42.42
-        ipv6_address: fdcc:ad94:bacf:61a3::2a
+        #put your servers ip address 
+        ipv4_address: 10.40.42.24
+        # ipv6_address: fdcc:ad94:bacf:61a3::2a
       caddy:
     volumes:
       - etc_wireguard:/etc/wireguard
@@ -55,5 +56,6 @@ networks:
     ipam:
       driver: default
       config:
+        #ip address subnet
         - subnet: 10.42.42.0/24
-        - subnet: fdcc:ad94:bacf:61a3::/64
+        # - subnet: fdcc:ad94:bacf:61a3::/64
