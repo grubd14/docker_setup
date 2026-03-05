@@ -1,8 +1,11 @@
 
 # Caddyfile for WireGuard Web UI
+{
+    email sushilneupane9745@gmail.com
+}
 
 # Optional: If you want basic auth in addition to WG-Easy's password
 # Uncomment the following:
 vpn.sushilneupane.com.np {
-     reverse_proxy wg-easy:51821
+     reverse_proxy wg-easy:80
  }

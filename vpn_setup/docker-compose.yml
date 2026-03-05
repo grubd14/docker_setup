@@ -4,18 +4,19 @@ volumes:
 services:
   wg-easy:
     environment:
-    #  Optional:
-      # - PORT=80
+      #  Optional:
+      - PORT=80
       # - HOST=0.0.0.0
       # - INSECURE=false
       - WG_HOST= vpn.sushilneupane.com.np
       - PASSWORD= vpn@mydomain
-      - WG_PORT= 51820
-      - WG_DEFAULT_DNS=1.1.1.1,8.8.8.8
-      - WG_MTU=1420
-      - WG_ALLOWED_IP=0.0.0.0/0,::/0
-      - UI_TRAFFIC_STATS=true
-      - UI_CHART_TYPE=1
+
+      # - WG_PORT= 51820
+      # - WG_DEFAULT_DNS=1.1.1.1,8.8.8.8
+      # - WG_MTU=1420
+      # - WG_ALLOWED_IP=0.0.0.0/0,::/0
+      # - UI_TRAFFIC_STATS=true
+      # - UI_CHART_TYPE=1
 
     image: ghcr.io/wg-easy/wg-easy:15
     container_name: wg-easy
@@ -23,7 +24,7 @@ services:
       wg:
         ipv4_address: 10.42.42.42
         ipv6_address: fdcc:ad94:bacf:61a3::2a
-      caddy: 
+      caddy:
     volumes:
       - etc_wireguard:/etc/wireguard
       - /lib/modules:/lib/modules:ro
