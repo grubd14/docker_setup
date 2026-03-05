@@ -1,4 +1,4 @@
-services:  
+services:
   caddy:
     container_name: caddy
     image: caddy:alpine
@@ -16,5 +16,9 @@ services:
       - data:/data
 
 networks:
-   caddy:
-        name: caddy
+  caddy:
+    name: caddy
+
+volumes:
+  config:
+  data:
