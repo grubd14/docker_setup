@@ -17,7 +17,9 @@ services:
 
 networks:
   caddy:
+    external: true
     name: caddy
+    driver: bridge
 
 volumes:
   config:

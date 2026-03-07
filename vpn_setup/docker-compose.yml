@@ -8,25 +8,23 @@ services:
       - PORT=51821
       # - HOST=0.0.0.0
       # - INSECURE=false
-      - HOST= vpn.sushilneupane.com.np
-      # - PASSWORD= vpn@mydomain
-
+      - WG_HOST=vpn.sushilneupane.com.np
       # - WG_PORT= 51820
       # - WG_DEFAULT_DNS=1.1.1.1,8.8.8.8
       # - WG_MTU=1420
       # - WG_ALLOWED_IP=0.0.0.0/0,::/0
       # - UI_TRAFFIC_STATS=true
       # - UI_CHART_TYPE=1
-    dns:
-      - 1.1.1.1
-      - 8.8.8.8
+    # dns:
+    #   - 1.1.1.1
+    #   - 8.8.8.8
 
     image: ghcr.io/wg-easy/wg-easy:15
     container_name: wg-easy
     networks:
-      wg:
+      # wg:
         #put your servers ip address 
-        ipv4_address: 10.40.42.24
+        # ipv4_address: 10.40.42.24
         # ipv6_address: fdcc:ad94:bacf:61a3::2a
       caddy:
     volumes:
@@ -50,12 +48,14 @@ services:
 networks:
   caddy:
     external: true
-  wg:
+    name: caddy 
     driver: bridge
-    enable_ipv6: true
-    ipam:
-      driver: default
-      config:
+  # wg:
+  #   driver: bridge
+  #   enable_ipv6: true
+  #   ipam:
+  #     driver: default
+  #     config:
         #ip address subnet
-        - subnet: 10.42.42.0/24
+        # - subnet: 10.42.42.0/24
         # - subnet: fdcc:ad94:bacf:61a3::/64

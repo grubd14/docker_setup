@@ -7,5 +7,5 @@
 # Optional: If you want basic auth in addition to WG-Easy's password
 # Uncomment the following:
 vpn.sushilneupane.com.np {
-     reverse_proxy wg-easy:80
+     reverse_proxy wg-easy:51821
  }
