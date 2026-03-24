@@ -1,0 +1,22 @@
+services:
+  project_frontend:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: inventory_frontend
+    restart: unless-stopped
+    ports:
+      - "5173:5173"
+    volumes:
+      - frontend_dist:/app/dist
+    depends_on:
+      - project_backend
+    networks:
+      - project-network
+
+networks:
+  project-network:
+    external: true
+
+volumes:
+  frontend_dist:

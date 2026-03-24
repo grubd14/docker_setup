@@ -1,0 +1,41 @@
+services:
+  postgres_db:
+    image: postgres:18
+    container_name: postgres_db
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: grubd14
+      POSTGRES_PASSWORD: grubd14@inventory
+      POSTGRES_DB: top_inventory
+      PGDATA: /var/lib/postgresql/data/pgdata
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    networks:
+      - project-network
+
+  project_backend:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: inventory_backend
+    restart: unless-stopped
+    ports:
+      - "3000:3000"
+    env_file:
+      - ./odin-inventory-nodejs/.env
+    networks:
+      - project-network
+    volumes:
+      - ./odin-inventory-nodejs:/app
+      - /app/node_modules
+    depends_on:
+      - postgres_db
+
+networks:
+  project-network:
+    external: true
+
+volumes:
+  postgres_data:
