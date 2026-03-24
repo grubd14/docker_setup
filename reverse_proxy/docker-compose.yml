@@ -21,6 +21,7 @@ services:
 
 networks:
   project-network:
+    name: project-network
     driver: bridge
   caddy:
     external: true
