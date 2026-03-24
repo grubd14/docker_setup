@@ -1,0 +1,13 @@
+http://localhost {
+    # API routes - must come FIRST
+    handle /api* {
+        reverse_proxy inventory_backend:3000
+    }
+    
+    # Frontend static files - everything else
+    handle {
+        root * /frontend/dist
+        try_files {path} /index.html
+        file_server
+    }
+}

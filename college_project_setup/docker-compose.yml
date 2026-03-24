@@ -1,0 +1,78 @@
+#this docker compose is to be used within
+services:
+  postgres_db:
+    image: postgres:18
+    container_name: postgres_db
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: grubd14
+      POSTGRES_PASSWORD: grubd14@inventory
+      POSTGRES_DB: top_inventory
+      PGDATA: /var/lib/postgresql/data/pgdata
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    networks:
+      - project-network
+
+  project_backend:
+    build:
+      context: ./odin-inventory-nodejs
+      dockerfile: Dockerfile
+    container_name: inventory_backend
+    restart: unless-stopped
+    ports:
+      - "3000:3000"
+    env_file:
+      - ./odin-inventory-nodejs/.env
+    networks:
+      - project-network
+    volumes:
+      - ./odin-inventory-nodejs:/app
+      - /app/node_modules
+    depends_on:
+      - postgres_db
+
+  project_frontend:
+    build:
+      context: ./top_inventory_frontend
+      dockerfile: Dockerfile
+    container_name: inventory_frontend
+    restart: unless-stopped
+    ports:
+      - "5173:5173"
+    volumes:
+      - frontend_dist:/app/dist
+    depends_on:
+      - project_backend
+    networks:
+      - project-network
+
+  caddy:
+    image: caddy:alpine
+    container_name: caddy
+    restart: unless-stopped
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./Caddyfile:/etc/caddy/Caddyfile
+      - frontend_dist:/frontend/dist:ro
+      - caddy_data:/data
+      - caddy_config:/config
+    networks:
+      - project-network
+    depends_on:
+      - project_frontend
+      - project_backend
+
+networks:
+  project-network:
+    driver: bridge
+
+volumes:
+  postgres_data:
+  frontend_dist:
+  caddy_data:
+  caddy_config:
