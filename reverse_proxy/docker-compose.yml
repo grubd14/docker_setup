@@ -17,9 +17,7 @@ services:
     networks:
       - project-network
       - caddy
-    depends_on:
-      - project_frontend
-      - project_backend
+
 
 networks:
   project-network:
