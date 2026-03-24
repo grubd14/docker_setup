@@ -6,6 +6,9 @@ services:
     ports:
       - "80:80"
       - "443:443"
+      - "80:80/tcp"
+      - "443:443/tcp"
+      - "443:443/udp"     
     volumes:
       - ./Caddyfile:/etc/caddy/Caddyfile
       - frontend_dist:/frontend/dist:ro
@@ -13,6 +16,7 @@ services:
       - caddy_config:/config
     networks:
       - project-network
+      - caddy
     depends_on:
       - project_frontend
       - project_backend
@@ -20,7 +24,11 @@ services:
 networks:
   project-network:
     driver: bridge
-
+  caddy:
+    external: true
+    name: caddy
+    driver: bridge
+    
 volumes:
   frontend_dist:
     external: true
