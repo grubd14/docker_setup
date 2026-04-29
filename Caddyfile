@@ -1,0 +1,11 @@
+vpn.sushilneupane.com.np {
+        # since the container will share the network with wg-easy
+        # we can use the proper container name
+        reverse_proxy wg-easy:80
+}
+
+git.sushilneupane.com.np {
+    #proxy to the forgejo
+    reverse_proxy forgejo:3000
+}
+

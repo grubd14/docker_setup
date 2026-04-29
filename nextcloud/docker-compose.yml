@@ -1,0 +1,66 @@
+services:
+  db:
+    image: postgres:16-alpine
+    container_name: nextcloud-db
+    restart: unless-stopped
+    environment:
+      - POSTGRES_DB=${POSTGRES_DB}
+      - POSTGRES_USER=${POSTGRES_USER}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+    volumes:
+      - nextcloud_db:/var/lib/postgresql/data
+    networks:
+      - caddy
+  redis:
+    image: redis:alpine
+    container_name : redis-db
+    restart: unless-stopped
+    ports: 
+      - "6379:6379"
+    volumes: 
+      - redis_data:/data
+    env_file:
+      - .env
+    environment: 
+      - REDIS_ARGS=--requirepass ${REDIS_PASS} --appendonly yes
+    networks:
+      - caddy
+
+  nextcloud:
+    image: nextcloud:latest
+    container_name: nextcloud
+    restart: unless-stopped
+    depends_on:
+      - db
+      - redis
+    environment:
+      - POSTGRES_HOST=${POSTGRES_HOST}
+      - POSTGRES_DB=${POSTGRES_DB}
+      - POSTGRES_USER=${POSTGRES_USER}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+      - REDIS_HOST=redis-db
+      - REDIS_HOST_PORT=${REDIS_PORT}
+      - REDIS_HOST_PASSWORD=${REDIS_PASS}
+      - NEXTCLOUD_ADMIN_USER=${NEXTCLOUD_ADMIN_USER}
+      - NEXTCLOUD_ADMIN_PASSWORD=${NEXTCLOUD_ADMIN_PASSWORD}
+      - NEXTCLOUD_TRUSTED_DOMAINS=${NEXTCLOUD_TRUSTED_DOMAINS}
+      - OVERWRITEPROTOCOL=https
+      - OVERWRITEHOST=${NEXTCLOUD_TRUSTED_DOMAINS}
+      - OVERWRITECLIURL=https://${NEXTCLOUD_TRUSTED_DOMAINS}
+      - TRUSTED_PROXIES=caddy
+    volumes:
+      - nextcloud_data:/var/www/html
+    networks:
+      - caddy
+networks:
+  caddy:
+    name: caddy
+    external: true
+volumes:
+  nextcloud_db:
+    name: nextcloud_db
+  nextcloud_data:
+    name: nextcloud_data
+  redis_data:
+    name: redis_data
+

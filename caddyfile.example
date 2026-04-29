@@ -1,0 +1,28 @@
+
+project.sushilneupane.com.np {
+    # API routes - must come FIRST
+    handle /api* {
+        reverse_proxy inventory_backend:3000
+    }
+
+    # Frontend static files - everything else
+    handle {
+        reverse_proxy inventory_frontend:5173
+    }
+}
+
+cloud.sushilneupane.com.np {
+        reverse_proxy nextcloud:80
+}
+
+
+vpn.sushilneupane.com.np {
+        # since the container will share the network with wg-easy
+        # we can use the proper container name
+        reverse_proxy wg-easy:80
+}
+
+git.sushilneupane.com.np {
+    #proxy to the forgejo
+    reverse_proxy forgejo:3000
+}
